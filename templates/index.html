@@ -1,0 +1,132 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>E-Ticaret</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+</head>
+
+<body>
+  {% include 'includes/_navbar.html' %}
+  {% if messages %}
+  {% for mesaj in messages %}
+  <div class="alert alert-{{mesaj.tags}} text-center " role="alert">
+    {{ mesaj }}
+  </div>
+  {% endfor %}
+  {% else %}
+
+  {% endif %}
+
+  <div class="container-fluid m-0 ">
+    <div class="row">
+
+      <div class="col-4 mt-5">
+        {% block slider %}
+        <!-- Kategori Listesi -->
+        <div class="list-group">
+          <a href="{% url 'index' %}" class="list-group-item list-group-item-action active" aria-current="true">
+            Tüm Ürünler
+          </a>
+          {% for kategori in kategoriler %}
+          <a href="{% url 'index' %}?search={{kategori.isim}}"
+            class="list-group-item list-group-item-action">{{kategori.isim}} <i class="bi bi-laptop  float-end"
+              style="color:red ;"></i></a>
+          {% endfor %}
+
+        </div>
+        {% endblock slider %}
+      </div>
+
+      <div class="col-8 mt-5">
+        <!--slider  -->
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="true">
+          <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
+              aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"
+              aria-label="Slide 2"></button>
+          </div>
+          <div class="carousel-inner">
+           
+            {% if kategori %}
+            {% for kategori in kategori %}
+            <div 
+            {% if forloop.first %}
+            class="carousel-item active"
+            {% else %}
+            class="carousel-item"
+            {% endif %}
+            >
+              <img src="{{kategori.foto}}" class="d-block w-100" height="600" alt="...">
+            </div>
+            {% endfor %}
+            {% else %}
+            <div class="carousel-item active">
+              <img src="{% static 'img/anasayfa.jpg' %}" class="d-block w-100" height="600" alt="...">
+            </div>
+            <div class="carousel-item">
+              <img src="{% static 'img/anasayfa2.jpg' %}" class="d-block w-100" height="600" alt="...">
+            </div>
+            {% endif %}
+           
+            
+            
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators"
+            data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
+    <div class="row mt-5">
+      {% block content %}
+      {% for urun in urunler %}
+      <div class="col-md-3 mb-5 ">
+        <!-- Değişecek alan -->
+        <div class="card">
+          <div class="card-header">
+            {{urun.urun_ekipman}} <b>- {{urun.urun_marka}} </b>
+          </div>
+          <img src="{{urun.resim.url}} " class="card-img-top" alt="..." style="height: 200px;">
+          <div class="card-body">
+            <p class="card-text"> {{urun.urun_adi}} </p>
+            <div class="card-footer">
+              <label for="" style="font-size: 20px; color:crimson;"><b>{{urun.urun_fiyat}} TL</b></label>
+              <a href="{% url 'detay' urun.id %}" class="btn btn-outline-info" style="float: right;">Detay</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+
+
+
+      {% endblock content %}
+    </div>
+
+  </div>
+  {% include 'includes/_footer.html' %}
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

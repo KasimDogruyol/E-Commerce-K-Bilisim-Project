@@ -1,0 +1,223 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>E-Ticaret</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
+  </head>
+  <body>
+    {% include 'includes/_navbar.html' %}
+    {% if messages %}
+  {% for mesaj in messages %}
+  <div class="alert alert-{{mesaj.tags}} text-center " role="alert">
+    {{ mesaj }}
+  </div>
+  {% endfor %}
+  {% else %}
+
+  {% endif %}
+   <div class="container-fluid">
+        <div class="row">
+            <!--slider  -->
+        </div>
+        <div class="row">
+            <div class="col-md-3">
+                <!-- Kategori Listesi -->
+                <div class="list-group">
+                  <a href="{% url 'index' %}" class="list-group-item list-group-item-action active" aria-current="true">
+                    Tüm Ürünler
+                  </a>
+                  {% for kategori in kategoriler %}
+                  <a href="{% url 'index' %}?search={{kategori.isim}}"
+                    class="list-group-item list-group-item-action">{{kategori.isim}} <i class="bi bi-laptop  float-end"
+                      style="color:red ;"></i></a>
+                  {% endfor %}
+        
+                </div>
+            </div>
+            
+            <div class="col-md-9">
+                <!-- Değişecek alan -->
+                <h4 class="text-success text-center">Profil Güncelleme Sayfası</h4>
+                <form action="" method = "POST">
+                  {% csrf_token %}
+                    
+                      <div class="mb-3 row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Kullancı Adı :</label>
+                        <div class="col-sm-6">
+                          <input type="text" name = "kullaniciguncelle" class="form-control" >
+                        </div>
+                      </div>
+                      <div class="mb-3 row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Telefon Numarası : </label>
+                        <div class="col-sm-6">
+                          <input type="text" name="telguncelle" class="form-control" >
+                        </div>
+                      </div>
+                      
+                      <div class="mb-3 row">
+                        <label for="inputPassword" class="col-sm-2 col-form-label">Email</label>
+                        <div class="col-sm-6">
+                          <input type="text" name="emailguncelle" class="form-control" >
+                        </div>
+                      </div>
+                      
+                      
+                      <div class="row">
+                        <div class="col-md-2">
+
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{% url 'sifredegistir' %}">Şifre Değiştir</a>
+                            <button type="submit" class="btn btn-success" style="float: right;">Güncelle</button>
+                        </div>
+                      </div>
+                </form>
+            </div>
+            
+        </div>
+   </div>
+   <footer>
+    <!-- footer -->
+    <div class="container-fluid bg-dark">
+      <footer class="row row-cols-1 row-cols-sm-2 row-cols-md-5 py-5 my-5 border-top text-warning">
+        >
+    
+        <div class="col mb-3">
+    
+        </div>
+    
+        <div class="col mb-3">
+          <h5>İletişim</h5>
+          <ul class="nav flex-column">
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted"><i class="bi bi-house-door me-2" style="color: yellow "></i>Çanakkale</a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted"><i class="bi bi-envelope me-2" style="color: yellow"></i>kasimdogruyol17@gmail.com</i></a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted"><i class="bi bi-telephone-inbound me-2" style="color: yellow"></i>05394808236</i></a></li>
+            <li class="nav-item mb-2"><a href="#" class="nav-link p-0 text-muted"><i class="bi bi-printer me-2" style="color: yellow"></i>4565156165165</a></li>
+          </ul>
+        </div>
+        <div class="col">
+
+        </div>
+        
+    
+        <div class="col mb-3 ">
+          <h5>Sosyal Medya</h5>
+          <ul class="nav flex-column">
+            <li class="nav-item mb-2"><a href="https://twitter.com/i/flow/login?input_flow_data=%7B%22requested_variant%22%3A%22eyJsYW5nIjoidHIifQ%3D%3D%22%7D" class="nav-link p-0 text-muted">
+              <i class="bi bi-twitter" style="color:red ;"></i>
+            </a></li>
+            <li class="nav-item mb-2"><a href="https://www.instagram.com/" class="nav-link p-0 text-muted">
+              <i class="bi bi-instagram" style="color:red ;"></i>
+            </a></li>
+            <li class="nav-item mb-2"><a href="https://www.linkedin.com/in/kas%C4%B1m-do%C4%9Fruyol-63208a229/" class="nav-link p-0 text-muted">
+              <i class="bi bi-linkedin" style="color:red ;"></i>
+            </a></li>
+            <li class="nav-item mb-2" ><a href="https://tr-tr.facebook.com/" class="nav-link p-0 text-muted">
+              <i class="bi bi-facebook"  style="color:red ;"></i>
+            </a></li>
+            
+          </ul>
+        </div>
+      </footer>
+    </div>
+</footer>
+
+
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-success" id="exampleModalLabel">Giriş Formu</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center">
+          <button class="btn btn-outline-primary ">Twitter <i class="bi bi-twitter"></i></button>
+          <button class="btn btn-outline-danger ">Google <i class="bi bi-google"></i></button>
+          
+        </div>
+        <form>
+          <div class="mb-3">
+            
+            <input type="text" class="form-control" id="recipient-name" placeholder="Email">
+          </div>
+          <div class="mb-3">
+            
+            <input type="password" class="form-control" id="recipient-name" placeholder="Şifre">
+          </div>
+          
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+        <button type="button" class="btn btn-success">Giriş Yap <i class="bi bi-person-check"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="exampleModal1" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title text-primary" id="exampleModalLabel">Kayıt Formu</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="text-center">
+          <button class="btn btn-outline-primary ">Twitter <i class="bi bi-twitter"></i></button>
+          <button class="btn btn-outline-danger ">Google <i class="bi bi-google"></i></button>
+          
+        </div>
+        <form>
+          <div class="mb-3 mt-3">
+            
+            <input type="text" class="form-control" id="recipient-name" placeholder="Adı">
+          </div>
+          <div class="mb-3">
+            
+            <input type="text" class="form-control" id="recipient-name" placeholder="Soyadı">
+          </div>
+          <div class="mb-3">
+            
+            <input type="text" class="form-control" id="recipient-name" placeholder="Email">
+          </div>
+          
+          <div class="mb-3">
+            
+            <input type="password" class="form-control" id="recipient-name" placeholder="Şifre">
+          </div>
+          <div class="mb-3">
+            
+            <input type="password" class="form-control" id="recipient-name" placeholder="Şifre Tekrar">
+          </div>
+          
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+        <button type="button" class="btn btn-primary">Üye Ol <i class="bi bi-person-circle ms-2"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#example').DataTable({
+                "language":{
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Turkish.json"
+                }
+            });
+        });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,15 @@
+{% extends "index.html" %}
+{% load static %}
+{% block slider %}
+<div class="container">
+  <form method="POST" class="w-100 m-auto border p-4 text-light bg-dark mt-5">
+    {% csrf_token %}
+    <label for="">Kullanıcı Adı</label>
+    <input type="text" class="form-control " name="kullanici">
+    <label for="">Şifre</label>
+    <input type="password" class="form-control" name="sifre">
+    <input type="submit" value="Giriş" class="btn btn-primary mt-2">
+  </form>
+</div>
+
+{% endblock slider %}
