@@ -42,6 +42,8 @@ def detay(request,id):
                 sepet.adet += int(adett)
                 sepet.fiyat += int(adett) * int(urunum.urun_fiyat)
                 sepet.save()
+                messages.success(request, 'Sepete eklendi.')
+                return redirect('index')
             else:
                 sepet = Sepet.objects.create(user = request.user , urunler = urunum, adet = adett,  fiyat = int(adett) * int(urunum.urun_fiyat))
                 sepet.save()
@@ -77,11 +79,10 @@ def sepet(request):
     for i in urunler:
         toplam += i.fiyat
     if 'trash' in request.POST:
-        sil = request.POST['sil']
-        silinen = Sepet.objects.filter(user = request.user).get(id = sil).delete()
+        sil = request.POST['urunSil']
         print("sil",sil)
-        # silinen.delete()
-        silinen.save()
+        silinen = Sepet.objects.get(pk = sil)
+        silinen.delete()
         print(silinen)
         return redirect('sepet')
     if 'eksi' in request.POST:
@@ -113,6 +114,7 @@ def checkout(request):
     # form = OrderForm()
     siparis = Siparisler.objects.filter(user = user)
     urunler = Sepet.objects.filter(user = request.user)
+   
     toplam = 0
     for i in urunler:
         toplam += i.fiyat
@@ -133,9 +135,13 @@ def checkout(request):
         kartcvc = request.POST['kartcvc']
         email = request.POST['email']
         
+        
         if user.is_authenticated:
             if urunler is not None:
-                siparisim = Order.objects.create(user = user, adi = adi, soyadi = soyadi, sehir = sehir, ilce = ilce, adres = adres, tel = tel, posta = posta, kartisim = kartisim, kartno = kartno, kartay = kartay, kartyil = kartyil, kartcvc = kartcvc,email = email)
+                siparisim = Order.objects.create(user = user, adi = adi, soyadi = soyadi, sehir = sehir,
+                                                 ilce = ilce, adres = adres, tel = tel, posta = posta,
+                                                 kartisim = kartisim, kartno = kartno, kartay = kartay,
+                                                 kartyil = kartyil, kartcvc = kartcvc,email = email )
                 siparisim.save()
                 messages.success(request, 'Siparişiniz alınmıştır. Teşekkür ederiz.')
                 return redirect('index')    
@@ -164,7 +170,14 @@ def siparisler(request):
     if user.is_authenticated:
         sepet = Sepet.objects.filter(user = user)
         bilgi = Order.objects.filter(user = user)
-        print(sepet)
+        siparis = Siparisler.objects.all()
+        # print("bilgi",bilgi)  
+        # for order in bilgi:
+        #     print("Order",order.sepets)
+        #     for sepet2 in sepet:
+        #         print(type(sepet2)) # <class 'urunler.models.Sepet'>
+        #         for ensonsepet in sepet2.urunler:
+        #             print("ensonsepet",ensonsepet.urun_adi)
         if bilgi is not None:
             for i in bilgi:
                 print(i)
@@ -178,6 +191,7 @@ def siparisler(request):
         'bilgi':bilgi,
         'sepet':sepet,
         'user':user,
+        'siparis':siparis,
     }
     
     print(i)

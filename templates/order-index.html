@@ -33,7 +33,7 @@
                             <th> Email</th>
                             <th> Telefon</th>
                             <th> Durum</th>
-                            <th>Ürün</th>
+                            <!-- {% comment %} <th>Ürün</th> {% endcomment %} -->
                         </tr>
                     </thead>
                     <tbody>
@@ -44,8 +44,11 @@
                             <td>{{item.email}} </td>
                             <td>{{item.tel}} </td>
                             <td>Beklemede</td>
-                            <td><img src="{{sepet.urun.resim.url}} " alt=""> </td>
-                            
+                            <!-- {% comment %} <td><img src="{{sepet.urun.resim.url}} " alt=""> </td> {% endcomment %}
+                            {% comment %} {% for product in item.sepets.urunler %}
+                            <td> {{ product.urun_adi }} </td>
+                            {% endfor %}   {% endcomment %} -->
+
                         </tr>
                       {% endfor %}  
                         

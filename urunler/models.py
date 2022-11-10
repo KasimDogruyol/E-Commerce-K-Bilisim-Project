@@ -82,6 +82,8 @@ class Order(models.Model):
         ('Canceled','Canceled'),
     )
     user = models.ForeignKey(User,on_delete=models.CASCADE,null = True)
+    sepets = models.ManyToManyField(Sepet)
+
     adi = models.CharField(max_length=50)
     soyadi = models.CharField(max_length=50)
     tel = models.IntegerField(null = True,blank = True)
